@@ -1,6 +1,6 @@
-package com.example.studentcrud.controller;
+package com.example.studentcrud.presentation.controller;
 
-import com.example.studentcrud.model.Student;
+import com.example.studentcrud.domain.model.Student;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;

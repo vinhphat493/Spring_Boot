@@ -1,10 +1,10 @@
-package com.example.studentcrud.model;
+package com.example.studentcrud.domain.model;
 
 public class Student {
-    Integer id;
-    String name;
-    int age;
-    String email;
+    private Long id;
+    private String name;
+    private Integer age;
+    private String email;
 
     public Student() {
         this.id = null;
@@ -13,18 +13,24 @@ public class Student {
         this.email = "";
     }
 
-    public Student(Integer id, String name, int age, String email) {
+    public Student(Long id, String name, int age, String email) {
         this.id = id;
         this.name = name;
         this.age = age;
         this.email = email;
     }
 
-    public Integer getId() {
+    public Student(String name, Integer age, String email) {
+        this.name = name;
+        this.age = age;
+        this.email = email;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
