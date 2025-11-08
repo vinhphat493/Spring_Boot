@@ -31,7 +31,7 @@ public class StudentRepositoryImpl implements StudentRepository {
 
     @Override
     public List<Student> findAll() {
-        return students;
+        return new ArrayList<>(students);
     }
 
     @Override
@@ -52,7 +52,7 @@ public class StudentRepositoryImpl implements StudentRepository {
     @Override
     public Optional<Student> findByEmail(String email) {
         return students.stream()
-                .filter(student -> student.getEmail().equals(email))
+                .filter(student -> student.getEmail().equalsIgnoreCase(email))
                 .findFirst();
     }
 }
