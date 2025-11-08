@@ -3,10 +3,12 @@ package com.example.studentcrud.domain.service;
 import com.example.studentcrud.domain.model.Student;
 import com.example.studentcrud.domain.repository.StudentRepository;
 import com.example.studentcrud.shared.exception.BadRequestException;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.regex.Pattern;
 
+@Service
 public class StudentService {
 
     private final StudentRepository studentRepository;
@@ -24,7 +26,7 @@ public class StudentService {
         validateStudentData(name, age, email);
 
         if (studentRepository.findByEmail(email).isPresent()) {
-            throw new BadRequestException("Email đã tồn tại!");
+            throw new BadRequestException("Email đã tồn tại " + email + "!");
         };
 
         Student student = new Student(name, age, email);

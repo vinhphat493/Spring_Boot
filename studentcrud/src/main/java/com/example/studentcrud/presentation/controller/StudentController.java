@@ -4,54 +4,27 @@ import com.example.studentcrud.application.dto.CreateStudentDTO;
 import com.example.studentcrud.application.dto.StudentDTO;
 import com.example.studentcrud.application.dto.UpdateStudentDTO;
 import com.example.studentcrud.domain.model.Student;
-import com.example.studentcrud.domain.repository.StudentRepository;
 import com.example.studentcrud.domain.service.StudentService;
 import com.example.studentcrud.shared.response.ApiResponse;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/students")
 public class StudentController {
 
-    private StudentService studentService = new StudentService(new StudentRepository() {
-        @Override
-        public Student save(Student student) {
-            return null;
-        }
+    private final StudentService studentService;
 
-        @Override
-        public Optional<Student> findById(Long id) {
-            return Optional.empty();
-        }
+    public StudentController(StudentService studentService) {
+        this.studentService = studentService;
+    }
 
-        @Override
-        public List<Student> findAll() {
-            return List.of();
-        }
-
-        @Override
-        public void update(Student student) {
-
-        }
-
-        @Override
-        public void deleteById(Long id) {
-
-        }
-
-        @Override
-        public Optional<Student> findByEmail(String email) {
-            return Optional.empty();
-        }
-    });
-
-    private StudentDTO mapToDTO(Student student) {
+    public StudentDTO mapToDTO(Student student) {
         return new StudentDTO(
                 student.getId(),
                 student.getName(),
@@ -60,8 +33,8 @@ public class StudentController {
         );
     }
 
-    @PostMapping()
-    public ResponseEntity<ApiResponse<StudentDTO>> createStudent(CreateStudentDTO request) {
+    @PostMapping
+    public ResponseEntity<ApiResponse<StudentDTO>> createStudent(@Valid @RequestBody CreateStudentDTO request) {
         Student newStudent = studentService.createStudent(request.getName(), request.getAge(), request.getEmail());
         StudentDTO studentDTO = mapToDTO(newStudent);
         return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.created(studentDTO));
@@ -85,13 +58,13 @@ public class StudentController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse<StudentDTO>> updateStudent(@PathVariable Long id, @RequestBody UpdateStudentDTO request) {
+    public ResponseEntity<ApiResponse<StudentDTO>> updateStudent(@PathVariable Long id, @Valid @RequestBody UpdateStudentDTO request) {
         Student updatedStudent = studentService.updateStudent(id, request.getName(), request.getAge(), request.getEmail());
         return ResponseEntity.ok(ApiResponse.updated(mapToDTO(updatedStudent)));
     };
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse<StudentDTO>> deleteStudent(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<?>> deleteStudent(@PathVariable Long id) {
         studentService.deleteStudent(id);
         return ResponseEntity.ok(ApiResponse.deleted());
     }

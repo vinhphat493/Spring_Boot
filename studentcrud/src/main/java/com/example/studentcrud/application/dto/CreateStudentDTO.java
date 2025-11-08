@@ -1,9 +1,16 @@
 package com.example.studentcrud.application.dto;
 
+import jakarta.validation.constraints.*;
+
 // Nhận dữ liệu khi client POST
 public class CreateStudentDTO {
+    @NotBlank(message = "Tên không được bỏ trống")
     private String name;
+
+    @Min(value = 18, message = "Tuổi phải >= 18")
     private Integer age;
+
+    @Email(message = "Email phải đúng định dạng")
     private String email;
 
     public CreateStudentDTO(String name, Integer age, String email) {

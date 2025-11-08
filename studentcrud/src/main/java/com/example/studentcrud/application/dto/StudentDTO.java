@@ -1,6 +1,9 @@
 package com.example.studentcrud.application.dto;
 
+import org.springframework.validation.annotation.Validated;
+
 // Dùng để trả về response khi GET/POST/PUT
+@Validated
 public class StudentDTO {
     private Long id;
     private String name;
