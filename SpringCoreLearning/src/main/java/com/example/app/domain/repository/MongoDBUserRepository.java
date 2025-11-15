@@ -1,9 +1,12 @@
 package com.example.app.domain.repository;
 
+import org.springframework.stereotype.Repository;
+
+@Repository("mongodb")
 public class MongoDBUserRepository implements UserRepository {
-    public MongoDBUserRepository(String dbUrl) {
-        System.out.println("Connected to MongoDB: " + dbUrl);
-    }
+//    public MongoDBUserRepository(String dbUrl) {
+//        System.out.println("Connected to MongoDB: " + dbUrl);
+//    }
 
     @Override
     public void save(String name) {
