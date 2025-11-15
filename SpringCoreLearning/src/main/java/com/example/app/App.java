@@ -24,8 +24,21 @@ public class App {
          *         context.close();
          * */
         ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+        UserService service = context.getBean(UserService.class);
 
-        UserService userService = context.getBean("userService", UserService.class);
-        userService.addUser("John");
+//        // Lần 1
+//        UserService s1 = context.getBean(UserService.class);
+//        s1.setUserId(100L);
+//        s1.test();
+//
+//        // Lần 2
+//        UserService s2 = context.getBean(UserService.class);
+//        s2.setUserId(200L);
+//        s2.test();
+
+//        System.out.println("s1 == s2: " + (s1 == s2));
+
+        service.addUser(100L);  // userId = 100
+        service.addUser(200L);  // userId = ? (Still 100!)
     }
 }
